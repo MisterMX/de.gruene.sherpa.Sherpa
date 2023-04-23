@@ -1,0 +1,47 @@
+####
+# 1. Download sherpa client from the website:
+#   https://service.gruene.de/sherpawiki/doku.php?id=0.0_client-download:0.3_linux
+# 2. Extract files in folder 'sherpa-client-xxx' into 'sherpa-client'
+# 3. Build with
+#   flatpak-builder build-dir de.gruene.sherpa.Sherpa.yaml --force-clean --install --user
+# 4. Test with
+#   flatpak run de.gruene.sherpa.Sherpa  
+#
+app-id: de.gruene.sherpa.Sherpa
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: /app/sherpa-client/Sherpa
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=fallback-x11
+  # Wayland access
+  - --socket=wayland
+  # Needs to talk to the network:
+  - --share=network
+  # Needs to save files locally
+  - --filesystem=xdg-documents
+  # Printer access
+  - --socket=cups
+modules:
+  - name: sherpa-client
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/sherpa-client
+      - cp ./* /app/sherpa-client -r
+      - mkdir -p /app/bin/
+      # - ln -s /app/sherpa-client/Sherpa /app/bin/de.gruene.sherpa.Sherpa
+      - install -D de.gruene.sherpa.Sherpa -t /app/bin/
+    post-install:
+      - install -D de.gruene.sherpa.Sherpa.desktop -t /app/share/applications/
+      - install -Dm644 de.gruene.sherpa.Sherpa.svg -t /app/share/icons/hicolor/scalable/apps/
+    sources:
+      - type: dir
+        path: sherpa-client
+      - type: file
+        path: de.gruene.sherpa.Sherpa
+      - type: file
+        path: de.gruene.sherpa.Sherpa.desktop
+      - type: file
+        path: de.gruene.sherpa.Sherpa.svg

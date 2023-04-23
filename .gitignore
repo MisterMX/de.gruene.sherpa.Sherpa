@@ -1,0 +1,11 @@
+# Flatpak files
+.flatpak-builder
+build-dir
+flatpak
+
+# Sherpa client
+sherpa-client
+workspace
+*.skc
+*.tar.gz
+*.log

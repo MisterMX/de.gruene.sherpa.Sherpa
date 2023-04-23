@@ -1,0 +1,47 @@
+= SHERPA Flatpak Manifest
+
+This is a Flatpak manifest for SHERPA, the internal management tool of the
+https://www.gruene.de/[German Green party].
+It allows running the app in a safe, containerized environment across any Linux
+distribution.
+For externals it is of limited use.
+
+== Installation
+
+There is currently no available package to be pulled and installed from remote
+(i.e. from Flathub).
+However, with this manifest it can be built installed locally.
+
+=== Prerequisites
+
+`flatpak-builder` is required to be installed on the local system.
+On most Linux distributions it can be installed using the native package
+manager.
+See also the https://docs.flatpak.org/en/latest/first-build.html[Documentation]
+for more infos on first steps.
+
+=== Build and install
+
+First, download the SHERPA client from the
+https://service.gruene.de/sherpawiki/doku.php?id=0.0_client-download:0.3_linux[internal website] 
+and extract the files from `sherpa-client-xxx` into `./sherpa-client/`.
+
+The following command will build the flatpak and install it in the current
+user's environment:
+
+[source,bash]
+----
+flatpak-builder build-dir de.gruene.sherpa.Sherpa.yaml --force-clean --install --user
+----
+
+=== Run
+
+The app should be automatically detected by the operating system and ready
+to launch from whatever start menu is used.
+
+To run the app from the command execute the following:
+
+[source,bash]
+----
+flatpak run de.gruene.sherpa.Sherpa
+----

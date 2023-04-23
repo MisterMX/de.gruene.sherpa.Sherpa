@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Might be needed if running in a QT shell (like KDE):
+#export GTK_THEME=theme:variant sherpa-client-1.4-74/Sherpa
+
+SHERPA_BIN="/app/sherpa-client/Sherpa"
+"$SHERPA_BIN"
